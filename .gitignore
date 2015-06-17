@@ -4,6 +4,9 @@
 # phpstorm project files
 .idea
 
+#htaccess files
+.htaccess
+
 # netbeans project files
 nbproject
 
@@ -16,10 +19,10 @@ nbproject
 Thumbs.db
 
 # composer vendor dir
-# /vendor
+/vendor
 
 # composer itself is not needed
-# composer.phar
+composer.phar
 # composer.lock
 
 # Mac DS_Store Files
