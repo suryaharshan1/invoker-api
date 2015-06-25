@@ -4,7 +4,7 @@ $params = require(__DIR__ . '/params.php');
 return [
 	'version' => "0.0.0",
     'basePath' => dirname(__DIR__),
-	'timeZone' => 'Europe/Kiev',
+	'timeZone' => 'Asia/Kolkata',
 
 	'vendorPath' => dirname(dirname(dirname(__DIR__))) . '/vendor',
 
@@ -30,6 +30,9 @@ return [
 				'refresh_token' => [
 					'class' => 'OAuth2\GrantType\RefreshToken',
 					'always_issue_new_refresh_token' => true
+				],
+				'authorization_code' => [
+					'class' => 'OAuth2\GrantType\AuthorizationCode'
 				]
 			],
 		],
