@@ -31,7 +31,8 @@ class UserController extends \api\components\ActiveController
 				'actions' => [
 					'index',
 					'view',
-					'change'
+					'change',
+					'courses'
 				],
 				'roles' => ['@'],
 			]
@@ -97,5 +98,17 @@ class UserController extends \api\components\ActiveController
         }
 
         return $model;
+	}
+
+	public function actionCourses(){
+
+		$model =  new $this->modelClass([
+			'scenario' => yii\base\Model::SCENARIO_DEFAULT,
+		]);
+
+		$model = $this->modelClass()->findIdentityByAccessToken(0);
+
+		$courses = $model->getUserHasCourses()->all();
+		return $courses;
 	}
 }
