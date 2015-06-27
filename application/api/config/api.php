@@ -169,7 +169,8 @@ return [
 					'except' => ['delete', 'create', 'update'],
 					'extraPatterns' => [
 						'POST register' => 'register',
-						'PUT update' => 'change'
+						'PUT update' => 'change',
+						'GET profile' => 'profile'
 					],
 				],
 				[
