@@ -13,7 +13,7 @@ use yii\base\Action;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\QueryParamAuth;
 use yii\web\ForbiddenHttpException;
-
+use yii\web\UnauthorizedHttpException;
 
 class OAuth2AccessFilter extends \yii\base\ActionFilter
 {
@@ -51,7 +51,7 @@ class OAuth2AccessFilter extends \yii\base\ActionFilter
 			$oauthRequest = $oauth_module->getRequest();
 			$oauthResponse = $oauth_module->getResponse();
 			if (!$oauthServer->verifyResourceRequest($oauthRequest, $oauthResponse, $scopes)) {
-				throw new ForbiddenHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
+				throw new UnauthorizedHttpException(Yii::t('yii', 'You are not authorized to perform this action.'));				
 			}
 		}
 		return parent::beforeAction($action);
