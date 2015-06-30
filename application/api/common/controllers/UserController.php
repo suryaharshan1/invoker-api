@@ -45,21 +45,23 @@ class UserController extends \api\components\ActiveController
 			'scenario' => yii\base\Model::SCENARIO_DEFAULT,
 			]);
 
-		$bodyParams =  Yii::$app->getRequest()->getBodyParams();
+		//$bodyParams =  Yii::$app->getRequest()->getBodyParams();
+		$bodyParams =  Yii::$app->getRequest()->getRawBody();
+		$bodyParams =  json_decode($bodyParams, true);
 		if(isset($bodyParams["email"])){
 			if(null !== $model->findByEmail($bodyParams["email"])){
 				throw new ConflictHttpException("User already exists. ");				
 			}
 		}
 		else {
-			throw new BadRequestHttpException("Invalid fields in the data. ");
+			throw new BadRequestHttpException("email is a required field in the data.");
 		}
 		$model->load($bodyParams, '');
 		if(isset($bodyParams["password_hash"])){
 			$model->setPassword($bodyParams["password_hash"]);
 		}
 		else{
-			throw new BadRequestHttpException("Invalid fields in the data. ");
+			throw new BadRequestHttpException("password_hash is a required field in the data.");
 		}
         $model->generateAuthKey();
         if ($model->save()) {
@@ -71,7 +73,7 @@ class UserController extends \api\components\ActiveController
             throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
         }
 
-        return $model;
+        return $model->findIdentity($model->id);
 	}
 
 	public function actionChange(){    
