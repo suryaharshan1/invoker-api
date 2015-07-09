@@ -55,6 +55,22 @@ class CourseRating extends \api\components\db\ActiveRecord
         ];
     }
 
+    public function fields(){
+        return [
+            'rating',
+            'review',
+            'first_name' => function(){
+                $result = CourseRating::getUser()->addSelect('first_name')->one();
+                return $result['first_name'];
+            },
+            'last_name' => function(){
+                $result = CourseRating::getUser()->addSelect('last_name')->one();  
+                return $result['last_name'];
+            },
+            'rating_time'
+        ];
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -68,7 +84,7 @@ class CourseRating extends \api\components\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(Users::className(), ['id' => 'user_id']);
+        return $this->hasOne(\api\models\User::className(), ['id' => 'user_id']);
     }
 }
 

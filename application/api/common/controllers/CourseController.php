@@ -25,35 +25,12 @@ class CourseController extends \api\components\ActiveController
 			[
 				'allow' => true,
 				'actions' => [
+					'index',
 					'view',
-					'create',
-					'update',
-					'delete'
+					'update'
 				],
 				'roles' => ['@'],
-			],
-			[
-				'allow' => true,
-				'actions' => ['custom'],
-				'roles' => ['@'],
-				'scopes' => ['custom'],
-			],
-			[
-				'allow' => true,
-				'actions' => ['protected'],
-				'roles' => ['@'],
-				'scopes' => ['protected'],
 			]
 		];
-	}
-
-	public function actionCustom()
-	{
-		return ['status' => 'ok', 'underScope' => 'custom'];
-	}
-
-	public function actionProtected()
-	{
-		return ['status' => 'ok', 'underScope' => 'protected'];
 	}
 }

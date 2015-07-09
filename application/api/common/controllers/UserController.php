@@ -45,7 +45,6 @@ class UserController extends \api\components\ActiveController
 			'scenario' => yii\base\Model::SCENARIO_DEFAULT,
 			]);
 
-		//$bodyParams =  Yii::$app->getRequest()->getBodyParams();
 		$bodyParams =  Yii::$app->getRequest()->getRawBody();
 		$bodyParams =  json_decode($bodyParams, true);
 		if(isset($bodyParams["email"])){
@@ -64,6 +63,9 @@ class UserController extends \api\components\ActiveController
 			throw new BadRequestHttpException("password_hash is a required field in the data.");
 		}
         $model->generateAuthKey();
+        if(isset($bodyParams["image"]) && $bodyParams["image"] !== "") {
+        	$model->image = base64_decode($model->image);
+        }
         if ($model->save()) {
             $response = Yii::$app->getResponse();
             $response->setStatusCode(201);
@@ -72,34 +74,45 @@ class UserController extends \api\components\ActiveController
         } elseif (!$model->hasErrors()) {
             throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
         }
-
-        return $model->findIdentity($model->id);
+		$model = $model->findIdentity($model->id);
+		$model->image = base64_encode($model->image);
+		return $model;
 	}
 
 	public function actionChange(){    
 		/* @var $model ActiveRecord */
-		$bodyParams = Yii::$app->getRequest()->getBodyParams();
-        $model = new $this->modelClass([
+		$bodyParams =  Yii::$app->getRequest()->getRawBody();
+		$bodyParams =  json_decode($bodyParams, true);
+		$model = new $this->modelClass([
 			'scenario' => yii\base\Model::SCENARIO_DEFAULT,
 			]);
-        $model = $model->findIdentity($bodyParams["id"]);
+    
+		$model = $model->findIdentityByAccessToken(0);
+	
         if(isset($bodyParams["auth_key"]) || isset($bodyParams["password_reset_token"]) || isset($bodyParams["created_at"]) || isset($bodyParams["updated_at"]) || isset($bodyParams["mobile_regid"])){
         	throw new BadRequestHttpException('Invalid fields in the data.');
         }
         if(isset($bodyParams["email"])){
         	throw new NotAcceptableHttpException('Username cannot be changed. ');
-        	
-        }
-        if(isset($bodyParams["password_hash"])){
-        	$model->setPassword($bodyParams["password_hash"]);
         }
         
         $model->scenario = yii\base\Model::SCENARIO_DEFAULT;
         $model->load($bodyParams, '');
+
+        if(isset($bodyParams["password_hash"])){
+        	$model->setPassword($bodyParams["password_hash"]);
+        }
+        
+		if(isset($bodyParams["image"]) && $bodyParams["image"] !== "") {
+        	//$bodyParams["image"] = base64_decode($bodyParams["image"]);
+        	$model->image = base64_decode($bodyParams["image"]);
+        }
+        
         if ($model->save() === false && !$model->hasErrors()) {
             throw new ServerErrorHttpException('Failed to update the object for unknown reason.');
         }
-
+    	$model = $model->findIdentityByAccessToken(0);
+        $model->image = base64_encode($model->image);
         return $model;
 	}
 

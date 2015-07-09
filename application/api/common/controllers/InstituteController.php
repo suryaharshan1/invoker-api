@@ -31,29 +31,7 @@ class InstituteController extends \api\components\ActiveController
 					'delete'
 				],
 				'roles' => ['@'],
-			],
-			[
-				'allow' => true,
-				'actions' => ['custom'],
-				'roles' => ['@'],
-				'scopes' => ['custom'],
-			],
-			[
-				'allow' => true,
-				'actions' => ['protected'],
-				'roles' => ['@'],
-				'scopes' => ['protected'],
 			]
 		];
-	}
-
-	public function actionCustom()
-	{
-		return ['status' => 'ok', 'underScope' => 'custom'];
-	}
-
-	public function actionProtected()
-	{
-		return ['status' => 'ok', 'underScope' => 'protected'];
 	}
 }

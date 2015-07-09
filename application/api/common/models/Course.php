@@ -3,7 +3,7 @@
 namespace api\common\models;
 
 use Yii;
-
+use api\models\User;
 /**
  * This is the model class for table "course".
  *
@@ -66,6 +66,36 @@ class Course extends \api\components\db\ActiveRecord
         ];
     }
 
+    public function fields() {
+        return [
+            'id',
+            'name',
+            'amount',
+            'strength' => function () {
+                return intval(Course::getUserHasCourses()->count());
+            },
+            'rating' => function () {
+                $rating = Course::getCourseRatings()->average('[[rating]]'); 
+                return isset($rating) ? doubleval($rating) : 0;
+            },
+            'reviews' => function () {
+                return Course::getCourseRatings()->andWhere('review IS NOT NULL')->all();
+               
+            },
+            'institute' => function () {
+                return Course::getInstitute()->addSelect(["id","name"])->one();
+            },
+            'instructor' => function () {
+                return Course::getInstructor()->addSelect(["id","first_name","last_name"])->one();
+            },
+            'coursetype' => function () {
+                return Course::getCoursetype()->one();
+            },
+            'strategy',
+            'validity',
+        ];
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -79,7 +109,7 @@ class Course extends \api\components\db\ActiveRecord
      */
     public function getInstructor()
     {
-        return $this->hasOne(Users::className(), ['id' => 'instructor_id']);
+        return $this->hasOne(\api\models\User::className(), ['id' => 'instructor_id']);
     }
 
     /**
