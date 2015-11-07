@@ -32,7 +32,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface, \OAuth2\S
      */
     public static function tableName()
     {
-        return '{{%users}}';
+        return '{{%user}}';
     }
 
     /**
