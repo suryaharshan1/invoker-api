@@ -1,8 +1,6 @@
 <?php
 
-namespace api\common\models;
-
-use Yii;
+namespace api\versions\v1\models;
 
 /**
  * This is the model class for table "block_time".
@@ -15,61 +13,7 @@ use Yii;
  *
  * @property Course $course
  */
-class BlockTime extends \api\components\db\ActiveRecord
+class BlockTime extends \api\common\models\BlockTime
 {
-    public $institute;
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'block_time';
-    }
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['starttime', 'endtime', 'course_id'], 'required'],
-            [['starttime', 'endtime', 'created_time','institute'], 'safe'],
-            [['course_id'], 'integer']
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'starttime' => 'Starttime',
-            'endtime' => 'Endtime',
-            'created_time' => 'Created Time',
-            'course_id' => 'Course ID',
-            'course.name' => 'Course',
-            'course.institute.name' => 'Institute',
-        ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCourse()
-    {
-        return $this->hasOne(Course::className(), ['id' => 'course_id']);
-    }
-
-    public function getInstitute(){
-        if($this->course_id != NULL){
-            $institute_id = Course::find()->select(['institute_id'])->where([
-                    'id' => $this->course_id,
-                ])->one()->institute_id;
-
-            $institute = Institute::findOne(['id'=>$institute_id]);
-            return $institute;
-        }
-    }
 }

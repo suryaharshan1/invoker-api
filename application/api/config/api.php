@@ -12,11 +12,6 @@ return [
             'rules' => [
 				[
 					'class' => 'yii\rest\UrlRule',
-					'controller' => 'v1/advertisement',
-
-				],
-				[
-					'class' => 'yii\rest\UrlRule',
 					'controller' => 'v1/course',
 					'except' => ['create','delete','update'],
                     'pluralize' => false,
@@ -39,7 +34,6 @@ return [
 				[
 					'class' => 'yii\rest\UrlRule',
 					'controller' => 'v1/user-has-course',
-
 				],
 			]
 		],
