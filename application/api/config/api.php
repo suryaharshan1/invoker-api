@@ -20,6 +20,9 @@ return [
 					'class' => 'yii\rest\UrlRule',
 					'controller' => 'v1/institute',
                     'except' => ['create','delete','update'],
+                    'extraPatterns' => [
+                        'GET Courses' => 'courses',
+                    ],
 				],
 				[
 					'class' => 'yii\rest\UrlRule',
