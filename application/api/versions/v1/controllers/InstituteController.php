@@ -6,8 +6,14 @@ class InstituteController extends \api\common\controllers\InstituteController
 {
     public $modelClass = '\api\versions\v1\models\Institute';
 
+    //with url of type institute/courses?id=0
     public function actionCourses($id){
-        $model = $this->loadModel($id);
-        return $model->getCourses();
+    	$modelClass = $this->modelClass; 
+        $model = $modelClass::find()->where(['id' => $id])->one();
+        if($model !== null)
+        	$data = $model->getCourses()->asArray()->all();
+        else
+        	$data = array();
+        return $data;
     }
 }

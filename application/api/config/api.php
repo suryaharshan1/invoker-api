@@ -21,13 +21,13 @@ return [
 					'controller' => 'v1/institute',
                     'except' => ['create','delete','update'],
                     'extraPatterns' => [
-                        'GET Courses' => 'courses',
+                        'GET courses' => 'courses',
                     ],
 				],
 				[
 					'class' => 'yii\rest\UrlRule',
 					'controller' => 'v1/user',
-					'except' => ['delete', 'create', 'update'],
+					'except' => ['delete', 'update'],
 					'extraPatterns' => [
 						'POST register' => 'register',
 						'PATCH update' => 'change',
