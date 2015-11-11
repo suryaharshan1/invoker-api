@@ -28,7 +28,6 @@ class UserController extends \api\common\controllers\UserController
 
 		$modelClassTimes = '\api\versions\v1\models\BlockTime';
 		$Times = $modelClassTimes::find()->where(['course_id'=>$courses_id])->andWhere(['between','created_time',$User['access_time'],date('Y:m:d H:i:s')])->asArray()->all();
-
 		return $Times;
 
 	}
@@ -36,6 +35,7 @@ class UserController extends \api\common\controllers\UserController
 	/**
 	* @POST method
 	* POST Params - new course list , mobile id of user
+	* @return the block times (with stattime > currenttime) for new set of courses
 	**/
 	public function actionSetcourselist(){
 
@@ -57,19 +57,10 @@ class UserController extends \api\common\controllers\UserController
 			$UserHasCourse->save();
 		}
 
-		/*
-		$query = Yii::$app->db->createCommand('SELECT * FROM block_time WHERE (course_id IN :courses_id) AND starttime > :time',
-			[
-				':courses_id' => $courses_id,
-				':time' => date('Y:m:d H:i:s')
-			]);
-		*/
-
 		$modelClassTimes = '\api\versions\v1\models\BlockTime';
-		$query = $modelClassTimes::find()->where(['course_id'=>$courses_id])->andWhere(['starttime > :time',[':time' => date('Y:m:d H:i:s')]]);
+		$blockTimes = $modelClassTimes::find()->where(['course_id'=>$courses_id])->andWhere(['>=','starttime',date('Y:m:d H:i:s')])->asArray()->all();
 
-		return Yii::getVersion();
-		return  $query->createCommand()->getRawSql();
+		return  $blockTimes;
 
 	}
 

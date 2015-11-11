@@ -1,0 +1,7 @@
+1. update composer with the following command :
+    composer.phar global require "fxp/composer-asset-plugin:@dev"
+2. now do : composer.phar update
+3. remove the vendor folder from the project - and update it:  composer.phar update
+4. Yii version required : 2.0.6
+
+Or do the fixes as given in : https://github.com/yiisoft/yii2/commit/1c4d24a51c33a31b41028c1ca0f30a9bc30d3c75
