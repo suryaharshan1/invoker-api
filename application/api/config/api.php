@@ -29,9 +29,7 @@ return [
 					'controller' => 'v1/user',
 					'except' => ['delete', 'update'],
 					'extraPatterns' => [
-						'POST register' => 'register',
-						'PATCH update' => 'change',
-						'GET profile' => 'profile'
+                        'POST times' => 'times'
 					],
 				],
 				[
