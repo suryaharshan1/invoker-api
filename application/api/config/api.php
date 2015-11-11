@@ -29,7 +29,8 @@ return [
 					'controller' => 'v1/user',
 					'except' => ['delete', 'update'],
 					'extraPatterns' => [
-                        'POST times' => 'times'
+                        'POST times' => 'times',
+                        'POST setcourselist' => 'setcourselist'
 					],
 				],
 				[
