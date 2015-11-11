@@ -27,8 +27,14 @@ class UserController extends \api\common\controllers\UserController
 		$courses_id = $modelClassUserCourses::find()->where(['user_id'=>$User['id']])->asArray()->all();
 
 		$modelClassTimes = '\api\versions\v1\models\BlockTime';
-		$Times = $modelClassTimes::find()->where(['course_id'=>$courses_id])->andWhere(['between','created_time',$User['access_time'],date('Y:m:d H:i:s')])->asArray()->all();
-		return $Times;
+		$Times = $modelClassTimes::find()->where(['course_id'=>$courses_id])->andWhere(['>=','created_time',$User['access_time']])->asArray()->all();
+
+		$result = array();
+		$result["blockTimes"] = $Times;
+		$result["access_time"] = date('Y:m:d H:i:s');
+
+		return $result;
+
 
 	}
 
@@ -60,7 +66,11 @@ class UserController extends \api\common\controllers\UserController
 		$modelClassTimes = '\api\versions\v1\models\BlockTime';
 		$blockTimes = $modelClassTimes::find()->where(['course_id'=>$courses_id])->andWhere(['>=','starttime',date('Y:m:d H:i:s')])->asArray()->all();
 
-		return  $blockTimes;
+		$result = array();
+		$result["blockTimes"] = $blockTimes;
+		$result["access_time"] = date('Y:m:d H:i:s');
+
+		return  $result;
 
 	}
 
