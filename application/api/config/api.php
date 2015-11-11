@@ -30,7 +30,8 @@ return [
 					'except' => ['delete', 'update'],
 					'extraPatterns' => [
                         'POST times' => 'times',
-                        'POST setcourselist' => 'setcourselist'
+                        'POST setcourselist' => 'setcourselist',
+                        'POST setaccesstime' => 'setaccesstime'
 					],
 				],
 				[
