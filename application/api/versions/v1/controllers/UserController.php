@@ -92,4 +92,22 @@ class UserController extends \api\common\controllers\UserController
 
 	}
 
+	/**
+	*	@POST method
+	*   @param mobile_id and access_time of user
+	*   sets the access_time for the user with given mobile_id
+	**/
+	public function actionSetregtoken(){
+
+		$bodyParams = Yii::$app->getRequest()->getBodyParams();
+		$mobile_id = $bodyParams['mobile_id'];
+		$reg_token = $bodyParams['reg_token'];
+
+		$modelClassUser = '\api\versions\v1\models\User';
+		$User = $modelClassUser::findOne(['mobile_id' => $mobile_id]);
+		$User->reg_token = $reg_token;
+		$User->save();
+
+	}
+
 }

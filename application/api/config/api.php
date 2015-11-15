@@ -31,7 +31,8 @@ return [
 					'extraPatterns' => [
                         'POST times' => 'times',
                         'POST setcourselist' => 'setcourselist',
-                        'POST setaccesstime' => 'setaccesstime'
+                        'POST setaccesstime' => 'setaccesstime',
+                        'POST setregtoken' => 'setregtoken'
 					],
 				],
 				[
