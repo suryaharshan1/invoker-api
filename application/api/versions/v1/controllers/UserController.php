@@ -14,7 +14,7 @@ class UserController extends \api\common\controllers\UserController
 	* create a user and returns it
 	**/
 
-	public function actionCreate(){
+	public function actionRegister(){
 		$bodyParams = Yii::$app->getRequest()->getBodyParams();
 
 		$mobile_id = $bodyParams['mobile_id'];

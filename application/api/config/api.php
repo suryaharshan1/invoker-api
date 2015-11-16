@@ -32,7 +32,8 @@ return [
                         'POST times' => 'times',
                         'POST setcourselist' => 'setcourselist',
                         'POST setaccesstime' => 'setaccesstime',
-                        'POST setregtoken' => 'setregtoken'
+                        'POST setregtoken' => 'setregtoken',
+                        'POST register' => 'register'
 					],
 				],
 				[
