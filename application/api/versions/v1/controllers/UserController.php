@@ -10,6 +10,37 @@ class UserController extends \api\common\controllers\UserController
 	public $modelClass = '\api\versions\v1\models\User';
 
 	/**
+	* @POST params : mobile_id , phone_number
+	* create a user and returns it
+	**/
+
+	public function actionCreate(){
+		$bodyParams = Yii::$app->getRequest()->getBodyParams();
+
+		$mobile_id = $bodyParams['mobile_id'];
+		$phone_number = $bodyParams['phone_number'];
+
+		$modelClassUser = '\api\versions\v1\models\User';
+		$User = $modelClassUser::find()->where(['mobile_id'=>$mobile_id])->one();
+
+		if($User != NULL){
+
+			$modelClassUserCourses = '\api\versions\v1\models\UserHasCourse';
+			$modelClassUserCourses::deleteAll(['user_id' => $User['id']]);
+			return $User;
+		}
+
+		else{
+			$model = new $modelClassUser();
+			$model->mobile_id = $mobile_id;
+			$model->phone_number = $phone_number;
+			$model->save();
+			return $model;
+		}
+
+	}
+
+	/**
 	*	@POST method
 	*   POST Parameters - mobile_id of the requesting user
 	*   @return the block times added after the user's last access time
