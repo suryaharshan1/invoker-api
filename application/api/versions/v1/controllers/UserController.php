@@ -27,6 +27,8 @@ class UserController extends \api\common\controllers\UserController
 
 			$modelClassUserCourses = '\api\versions\v1\models\UserHasCourse';
 			$modelClassUserCourses::deleteAll(['user_id' => $User['id']]);
+			$User->phone_number = $bodyParams['phone_number'];
+			$User->save();
 			return $User;
 		}
 
