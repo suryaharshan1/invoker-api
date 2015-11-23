@@ -66,6 +66,9 @@ class UserController extends \api\common\controllers\UserController
 		$result["blockTimes"] = $Times;
 		$result["access_time"] = date('Y:m:d H:i:s');
 
+		$User->access_time = date('Y:m:d H:i:s');
+		$User->save();
+
 		return $result;
 
 
@@ -102,6 +105,9 @@ class UserController extends \api\common\controllers\UserController
 		$result = array();
 		$result["blockTimes"] = $blockTimes;
 		$result["access_time"] = date('Y:m:d H:i:s');
+
+		$User->access_time = date('Y:m:d H:i:s');
+		$User->save();
 
 		return  $result;
 
