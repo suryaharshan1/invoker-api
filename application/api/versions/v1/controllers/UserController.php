@@ -100,7 +100,7 @@ class UserController extends \api\common\controllers\UserController
 		}
 
 		$modelClassTimes = '\api\versions\v1\models\BlockTime';
-		$blockTimes = $modelClassTimes::find()->where(['course_id'=>$courses_id])->andWhere(['>=','starttime',date('Y:m:d H:i:s')])->asArray()->all();
+		$blockTimes = $modelClassTimes::find()->where(['course_id'=>$courses_id])->andWhere(['>=','endtime',date('Y:m:d H:i:s')])->asArray()->all();
 
 		$result = array();
 		$result["blockTimes"] = $blockTimes;
